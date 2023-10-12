@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+<form action="">
+    <div>
+        <input type="text" placeholder="Enter First Name" id="firstname" />
+    </div>
+    <div>
+        <input type="text" placeholder="Enter Middle Name" id="middlename" />
+    </div>
+    <div>
+        <input type="text" placeholder="Enter Last Name" id="lastname" />
+    </div>
+    <button id="btn-submit">Submit</button>
+</form>
+<script>
+    const firstName = document.getElementById("firstname");
+    const middleName = document.getElementById("middlename");
+    const lastName = document.getElementById("lastname");
+    const submitBtn = document.getElementById("btn-submit");
+
+    submitBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const first = firstName.value;
+      const middle = middleName.value;
+      const last = lastName.value;
+
+      const randomNumbers = Math.floor(Math.random() * 1000);
+
+      const password = (
+        first.slice(0, 2) +
+        middle.slice(0, 2) +
+        last.slice(0, 2) +
+        randomNumbers
+      ).toLowerCase();
+
+      console.log(password);
+      const newUser = {
+        firstName: first,
+        middleName: middle,
+        lastName: last,
+        password: password,
+      };
+
+      console.log(newUser);
+
+      const res = await fetch(`http://localhost:8081/user/new`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      console.log(res);
+    });
+</script>
+</body>
+</html>
